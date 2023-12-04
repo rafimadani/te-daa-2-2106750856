@@ -1,6 +1,8 @@
 import time
 import resource
 
+#referensi : https://www.geeksforgeeks.org/partition-problem-dp-18/
+
 def partition_checker(arr):
     jumlah = sum(arr)
     if jumlah % 2 != 0:
@@ -18,6 +20,7 @@ def partition_checker(arr):
             new_dp[t + arr[i]] = new_subset
             new_dp[t] = subset
         dp = new_dp
+    print("anji")
 
     return False, []
 
@@ -52,7 +55,6 @@ for i in range(3):
         if count > 0:
             for _ in range(count):
                 subset2.append(num)
-
 
     if success:
         execution_time = (end_time - start_time) * 1000
