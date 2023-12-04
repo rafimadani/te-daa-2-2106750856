@@ -3,7 +3,6 @@ import resource
 
 def is_subset_sum(arr, n, target_sum, current_sum, index, selected):
     if current_sum == target_sum:
-        print(index)
         return True
     
     if index == n or current_sum > target_sum:
@@ -19,7 +18,7 @@ def is_subset_sum(arr, n, target_sum, current_sum, index, selected):
 
     return False
 
-def anonymous_function(arr):
+def branh_and_bound(arr):
     n = len(arr)
     total_sum = sum(arr)
 
@@ -48,7 +47,7 @@ for i in range(3):
 	n = len(input_list)
     
 	start_time = time.time()
-	if anonymous_function(input_list) == True:
+	if branh_and_bound(input_list) == True:
 		end_time = time.time()
 		memory_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024
 		execution_time = (end_time - start_time) * 1000
