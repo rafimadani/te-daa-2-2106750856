@@ -13,10 +13,10 @@ def is_subset_sum(arr, n, target_sum, current_sum, index, selected, subset1, sub
                 subset2.update({arr[i]})
         return True
     
-    if index == n or current_sum > target_sum: # infeasible solution
+    if index == n or current_sum > target_sum: # infeasible solution and bound 1
         return False
 
-    if best_solution_in_this_tree < target_sum: #  infeasible solution 2
+    if best_solution_in_this_tree < target_sum: #  bound 2
         return False
     
 
