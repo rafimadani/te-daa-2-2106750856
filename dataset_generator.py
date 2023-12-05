@@ -1,7 +1,12 @@
 import random
 
 def generate_dataset(size):
-    return [random.randint(1, 100)*2 for _ in range(size)]
+    unique_numbers = set()
+
+    while len(unique_numbers) < size:
+        unique_numbers.add(random.randint(1, 500) * 2)
+
+    return list(unique_numbers)
 
 def save_to_txt(filename, dataset):
     with open(filename, 'w') as file:
