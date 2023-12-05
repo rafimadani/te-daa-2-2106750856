@@ -19,6 +19,7 @@ def is_subset_sum(arr, n, target_sum, current_sum, index, selected, subset1, sub
     if best_solution_in_this_tree < target_sum: #  infeasible solution 2
         return False
     
+
     selected[index] = True  
     if is_subset_sum(arr, n, target_sum, current_sum + arr[index], index + 1, selected, subset1, subset2, best_solution_in_this_tree):
         return True
