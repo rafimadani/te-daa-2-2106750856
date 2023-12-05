@@ -1,30 +1,36 @@
 import time
 import resource
+import time
+import resource
 
-def is_subset_sum(arr, n, target_sum, current_sum, index, selected, subset1, subset2):
+def is_subset_sum(arr, n, target_sum, current_sum, index, selected, subset1, subset2, best_solution_in_this_tree):
     if current_sum == target_sum:
         # Extract subsets
         for i in range(n):
             if selected[i]:
-                subset1.append(arr[i])
+                subset1.update({arr[i]})
             else:
-                subset2.append(arr[i])
+                subset2.update({arr[i]})
         return True
     
-    if index == n or current_sum > target_sum:
+    if index == n or current_sum > target_sum: # infeasible solution
         return False
 
-    selected[index] = True
-    if is_subset_sum(arr, n, target_sum, current_sum + arr[index], index + 1, selected, subset1, subset2):
+    if best_solution_in_this_tree < target_sum: #  infeasible solution 2
+        return False
+    
+    selected[index] = True  
+    if is_subset_sum(arr, n, target_sum, current_sum + arr[index], index + 1, selected, subset1, subset2, best_solution_in_this_tree):
         return True
 
     selected[index] = False
-    if is_subset_sum(arr, n, target_sum, current_sum, index + 1, selected, subset1, subset2):
+    if is_subset_sum(arr, n, target_sum, current_sum, index + 1, selected, subset1, subset2, best_solution_in_this_tree-arr[index]):
         return True
 
     return False
 
-def branch_and_bound(arr):
+def branch_and_bound(arr_set):
+    arr = list(arr_set)
     n = len(arr)
     total_sum = sum(arr)
 
@@ -33,16 +39,21 @@ def branch_and_bound(arr):
 
     target_sum = total_sum // 2
     selected = [False] * n
-    subset1 = []
-    subset2 = []
+    subset1 = set()
+    subset2 = set()
 
-    result = is_subset_sum(arr, n, target_sum, 0, 0, selected, subset1, subset2)
+    arr.sort(reverse=True)
+    best_solution_in_this_tree = sum(arr)
+
+    result = is_subset_sum(arr, n, target_sum, 0, 0, selected, subset1, subset2, best_solution_in_this_tree)
 
     return result, subset1, subset2
 
+
+
 def read_numbers_from_file(file_path):
     with open(file_path, 'r') as file:
-        numbers = [int(line.strip()) for line in file]
+        numbers = {int(line.strip()) for line in file}
     return numbers
 
 dataset = ['dataset_kecil.txt', 'dataset_sedang.txt', 'dataset_besar.txt']
